@@ -2,7 +2,7 @@ class Deck
 
   def initialize
     @cards = Array.new
-    suits = [:hearts, :diamonds, :clubs, :spades]
+    suits = [:H, :D, :C, :S]
     suits.each do |suit|
       (2..10).each do |value|
         @cards.push(Card.new(suit, value))

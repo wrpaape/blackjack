@@ -7,14 +7,20 @@ class Card
   end
 
   def display
+
+    if display_value != 10
+      @not_10 = " "
+    else
+      @not_10 = ""
+    end
+
     print(
 """
- ----
-| #{suit} |
-| #{display_value} |
- ----
-"""
-    )
+                   ---
+                  | #{suit} |
+                  | #{display_value}#{@not_10}|
+                   ---
+""")
   end
 
   def display_value
