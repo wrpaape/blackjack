@@ -6,10 +6,6 @@ class Hand
     @total = 0
   end
 
-  def add_to_hand
-    @hand_cards.push(Dealer.deal)
-  end
-
   def total
     sum = 0
     for i in 0...@cards.size

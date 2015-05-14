@@ -5,10 +5,4 @@ class Player
     @hand = Hand.new
   end
 
-  def hit
-  end
-
-  def stay
-  end
-
 end

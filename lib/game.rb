@@ -14,7 +14,7 @@ class Game
     @dealer = Dealer.new
     @dealer.deck = Deck.new
     @player.name = "You"
-    @dealer.name = "The Dealer"
+    @dealer.name = "The dealer"
     @player.hand = Hand.new
     @dealer.hand = Hand.new
   end
@@ -27,32 +27,42 @@ class Game
       @dealer.hand.cards << @dealer.deal
     end
 
-
-    player_action
-    dealer_action
-    evaluate_hand
-  end
-
-  def evaluate_hand
-    @player_total = @player.hand.total
-    @dealer_total = @dealer.hand.total
-    if @player_total > 21
-      puts "#{@player.name} bust"
-      puts "#{@dealer.name} win"
-    elsif @dealer_total > 21
-      puts "#{@dealer.name} bust"
-      puts "#{@player.name} win"
-    elsif @player_total < @dealer_total
-      puts "#{@player.name} under"
-      puts "#{@dealer.name} win"
-    elsif @player_total == @dealer_total
-      puts "push"
-      puts "#{@player.name} and #{@dealer.name} tie"
-    elsif @player_total == 21
+    if @player.hand.total== 21
+      display_header
+      display_current_hands
       puts "blackjack!"
       puts "#{@player.name} win"
     else
-      puts "#{@dealer.name} under"
+      player_action
+      if @player.hand.total > 21
+        puts "#{@player.name} bust"
+        puts "#{@dealer.name} wins"
+      else
+        dealer_action
+        evaluate_hand
+      end
+    end
+
+    game_over
+
+  end
+
+  def evaluate_hand
+
+    if @dealer.hand.total > 21
+      puts "#{@dealer.name} busts"
+      puts "#{@player.name} win"
+    elsif @player.hand.total < @dealer.hand.total
+      puts "#{@player.name} are under"
+      puts "#{@dealer.name} wins"
+    elsif @player.hand.total == @dealer.hand.total
+      puts "push"
+      puts "#{@player.name} and #{@dealer.name} tie"
+    elsif @player.hand.total == 21
+      puts "twenty-one!"
+      puts "#{@player.name} win"
+    else
+      puts "#{@dealer.name} is under"
       puts "#{@player.name} win"
     end
   end
@@ -79,7 +89,7 @@ class Game
     loop do
       display_header
       display_current_hands
-      if @dealer.hand.total >= 17; break end
+      if @dealer.hand.total >= 16; break end
       @dealer.hand.cards << @dealer.deal
       sleep(1)
     end
@@ -116,5 +126,21 @@ class Game
 
 """
     )
+  end
+
+  def game_over
+    puts("GAME OVER")
+    puts("\nPlay Again (y/n)?#{@prompt}")
+    again = gets.chomp.downcase
+    case again
+    when "y"
+      initialize
+      start
+    when "n"
+      puts "fine then"
+    else
+      puts "l2type"
+      game_over
+    end
   end
 end
