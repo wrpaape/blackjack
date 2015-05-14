@@ -7,12 +7,14 @@ class Card
   end
 
   def display
+    print(
 """
  ----
 | #{suit} |
 | #{display_value} |
  ----
 """
+    )
   end
 
   def display_value

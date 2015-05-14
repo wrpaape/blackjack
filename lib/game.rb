@@ -47,20 +47,12 @@ class Game
       @dealer.hand.cards << @dealer.deal
     end
 
-    print @dealer.name
-    for i in 0...@dealer.hand.cards.size
-      print @dealer.hand.cards[i].display
-    end
-
-    print @player.name
-    for i in 0...@player.hand.cards.size
-      print @player.hand.cards[i].display
-    end
+    display_current_hands
 
     loop do
       if @player.hand.total >= 21; break end
-      puts("Hit (h) or Stay (s)?#{@prompt}")
-      action = gets.chomp.downcase
+        puts("Hit (h) or Stay (s)?#{@prompt}")
+        action = gets.chomp.downcase
       case action
       when "h"
         @player.hand.cards << @dealer.deal
@@ -69,6 +61,8 @@ class Game
       else
         puts "l2type"
       end
+      system("clear")
+      display_current_hands
     end
 
     evaluate_hand
@@ -77,12 +71,37 @@ class Game
   end
 
   def evaluate_hand
-    player_total = @player.hand.total
-    dealer_total = @dealer.hand.total
-    if player_total < dealer_total
-      puts "#{@player.name} lose"
-    elsif player_total == dealer_total
-      puts
+    @player_total = @player.hand.total
+    @dealer_total = @dealer.hand.total
+    if @player_total > 21
+      puts "#{@player.name} bust"
+      puts "#{@dealer.name} win"
+    elsif @dealer_total > 21
+      puts "#{@dealer.name} bust"
+      puts "#{@player.name} win"
+    elsif @player_total < @dealer_total
+      puts "#{@player.name} under"
+      puts "#{@dealer.name} win"
+    elsif @player_total == @dealer_total
+      puts "push"
+      puts "#{@player.name} and #{@dealer.name} tie"
+    elsif @player_total == 21
+      puts "blackjack!"
+      puts "#{@player.name} win"
+    else
+      puts "#{@dealer.name} under"
+      puts "#{@player.name} win"
+    end
+  end
+
+  def display_current_hands
+    print @dealer.name
+    @dealer.hand.display_cards
+
+    puts("******************************************")
+
+    print @player.name
+    @player.hand.display_cards
   end
       # system('clear')
       # player_one_card = @player_one.draw

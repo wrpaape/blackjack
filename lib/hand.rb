@@ -18,4 +18,10 @@ class Hand
     @total = sum
   end
 
+  def display_cards
+    for i in 0...@cards.size
+      @cards[i].display
+    end
+  end
+
 end
