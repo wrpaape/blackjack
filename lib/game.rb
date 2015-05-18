@@ -70,7 +70,7 @@ class Game
   def player_action
     loop do
       display_header
-      display_current_hands
+      display_current_hands_dealer_hidden
       if @player.hand.total >= 21; break end
         puts("\nHit (h) or Stay (s)?#{@prompt}")
         action = gets.chomp.downcase
@@ -98,6 +98,23 @@ class Game
   def display_current_hands
     print @dealer.name
     @dealer.hand.display_cards
+
+    puts("******************************************")
+
+    print @player.name
+    @player.hand.display_cards
+  end
+
+  def display_current_hands_dealer_hidden
+    print @dealer.name
+    print(
+"""
+                   ---
+                  | X |
+                  | # |
+                   ---
+""")
+    @dealer.hand.cards[1].display
 
     puts("******************************************")
 
